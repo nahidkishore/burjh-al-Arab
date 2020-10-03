@@ -26,6 +26,7 @@ if(firebase.apps.length===0){
 
             setLoggedInUser(signedInUser);
            // console.log(signInUser);
+           storeAuthToken();
            history.replace(from);
           
           }).catch(function(error) {
@@ -37,6 +38,16 @@ if(firebase.apps.length===0){
             // The firebase.auth.AuthCredential type that was used.
             var credential = error.credential;
             // ...
+          });
+    }
+    const storeAuthToken =()=>{
+        firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
+        .then(function(idToken) {
+         sessionStorage.setItem('token', idToken);
+            // Send token to your backend via HTTPS
+         
+          }).catch(function(error) {
+            // Handle error
           });
     }
     return (
